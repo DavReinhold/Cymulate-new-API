@@ -29,12 +29,12 @@ function App() {
     <div className="App">
       <SourcesSelect setSelected={setSelectedSource} />
       {news.length > 0 &&
-        news.map((curr) => (
-          <>
+        news.map((curr, i) => (
+          <div key={i}>
             <h4>{curr.title}</h4>
             <br />
             <h6>{curr.description}</h6>
-          </>
+          </div>
         ))}
       <button onClick={load}>Load</button>
     </div>

@@ -26,7 +26,7 @@ const getNewsForOneDay = async (source, date) => {
       { query: currQuery },
       { last_read: new Date() },
       { new: true },
-    );
+    ).lean();
 
     if (queryExistInCache) {
       res = queryExistInCache.content;
@@ -42,7 +42,7 @@ const getNewsForOneDay = async (source, date) => {
         last_read: new Date(),
       });
 
-      await newNews.save();
+      await newNews.save({ new: true });
 
       res = newNews.content;
     }
@@ -50,7 +50,6 @@ const getNewsForOneDay = async (source, date) => {
     return res;
   } catch (e) {
     console.log(e);
-    throw new Error(e.toString());
   }
 };
 
@@ -61,7 +60,7 @@ const getNews = async (source, from, to) => {
     days.map((day) => getNewsForOneDay(source, day, day)),
   );
 
-  return values;
+  return values.flat();
 };
 
 module.exports = { getNews };
