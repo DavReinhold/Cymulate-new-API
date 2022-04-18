@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import SourcesSelect from "./components/sourcesSelect/sourcesSelect";
 import axios from "./axios";
@@ -9,16 +9,9 @@ function App() {
   const [currTimeLoad, setCurrTimeLoad] = useState(new Date());
   const [disableBtn, setDisableBtn] = useState(true);
 
-  useEffect(() => {
-    // delete existing new when the source h\is changed
-    setNews([]);
-
-    selectedSource && load();
-  }, [selectedSource]);
-
   const load = async () => {
     setDisableBtn(true);
-    let res = await axios.get(
+    let res = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}news/getNews`,
       {
         params: {

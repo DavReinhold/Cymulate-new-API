@@ -57,11 +57,11 @@ const getNews = async (source, from, to) => {
   let res;
   let days = splitDays(from, to);
 
-  Promise.all(days.map((day) => getNewsForOneDay(source, day, day)))
-    .then((values) => {
-      res = values;
-    })
-    .catch((e) => console.log(e));
+  const values = await Promise.all(
+    days.map((day) => getNewsForOneDay(source, day, day)),
+  );
+  console.log(values);
+  return res;
 };
 
 module.exports = { getNews };

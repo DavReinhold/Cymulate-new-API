@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const news = require("../services/news");
 
-router.get("/getNews", async (req, res) => {
+router.post("/getNews", async (req, res) => {
   try {
     let response = await news.getNews(
-      req.query.source,
-      req.query.from,
-      req.query.to,
+      req.body.params.source,
+      req.body.params.from,
+      req.body.params.to,
     );
 
     res.status(200).json(response);
