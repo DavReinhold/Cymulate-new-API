@@ -7,10 +7,8 @@ function App() {
   const [selectedSource, setSelectedSource] = useState();
   const [news, setNews] = useState([]);
   const [currTimeLoad, setCurrTimeLoad] = useState(new Date());
-  const [disableBtn, setDisableBtn] = useState(true);
 
   const load = async () => {
-    setDisableBtn(true);
     let res = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}news/getNews`,
       {
@@ -25,8 +23,6 @@ function App() {
     setNews((prev) => [...prev, ...res.data]);
 
     setCurrTimeLoad((prev) => new Date(prev - 7 * 24 * 60 * 60 * 1000));
-
-    setDisableBtn(false);
   };
 
   return (
@@ -40,9 +36,7 @@ function App() {
             <h6>{curr.description}</h6>
           </>
         ))}
-      <button disabled={disableBtn} onClick={load}>
-        Load
-      </button>
+      <button onClick={load}>Load</button>
     </div>
   );
 }

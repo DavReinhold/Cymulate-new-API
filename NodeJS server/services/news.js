@@ -25,6 +25,7 @@ const getNewsForOneDay = async (source, date) => {
     let queryExistInCache = await News.findOneAndUpdate(
       { query: currQuery },
       { last_read: new Date() },
+      { new: true },
     );
 
     if (queryExistInCache) {
